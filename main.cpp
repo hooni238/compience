@@ -22,10 +22,10 @@ int main(){
 	}
 
 
-	int result = 0;
-	bool wait_for_number = true, error = false;
+	int result = 0 ;
+	bool wait_for_number = true, error = false , gm=true;
 	for ( std::vector<std::string>::iterator it = elements.begin(); it != elements.end(); ++it ) {
-		bool is_number = true;
+		bool is_number = true ;
 		for ( std::string::iterator cit = it->begin(); cit != it->end(); ++cit)
 			if (not isdigit(*cit) )
 				is_number = false;
@@ -34,8 +34,16 @@ int main(){
 
 		if (is_number) {
 			if (wait_for_number) {
-				result += std::atoi(it->c_str());
-				wait_for_number = false;
+				if (gm)
+				{
+					result += std::atoi(it->c_str());
+					wait_for_number = false;
+				}
+				else
+				{
+					result -= std::atoi(it->c_str());
+                                        wait_for_number = false;
+				}
 			} else {
 				std::cout << "ERROR" << std::endl;
 				return -1;
@@ -47,7 +55,13 @@ int main(){
 			} else {
 				if ((*it) == "+"){
 					wait_for_number = true;
-				} else {
+					gm= true;
+				}
+				else if((*it) == "-") {
+					wait_for_number = true;
+                                        gm= false;
+                                }
+				else{					
 					std::cout << "ERROR" << std::endl;
 					return -1;
 				}
